@@ -13,6 +13,11 @@ exports.createTodo = async (req, res, next) => {
 
 exports.getAllTodo = async (req, res, next) => {
   try {
+    const todos = await Todo.findAll({
+      where: { userId: req.user.id },
+      attributes: ['id', 'title', 'completed']
+    });
+    res.status(200).json({ todos });
   } catch (err) {
     next(err);
   }

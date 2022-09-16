@@ -15,7 +15,10 @@ module.exports = async (req, res, next) => {
       return res.status(401).json({ message: 'you are unauthenticated' });
     }
 
-    const payload = jwt.verify(token, 'abcdefgh');
+    const payload = jwt.verify(
+      token,
+      process.env.JWT_SECRET_KEY || 'secret_key'
+    );
 
     const user = await User.findOne({ where: { id: payload.id } });
     if (!user) {

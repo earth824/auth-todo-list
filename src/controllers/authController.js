@@ -42,7 +42,11 @@ exports.login = async (req, res, next) => {
       email: user.email
     };
 
-    const token = jwt.sign(payload, 'abcdefgh', { expiresIn: '30d' });
+    const token = jwt.sign(
+      payload,
+      process.env.JWT_SECRET_KEY || 'secret_key',
+      { expiresIn: '30d' }
+    );
 
     res.status(200).json({ message: 'success login', token });
   } catch (err) {
